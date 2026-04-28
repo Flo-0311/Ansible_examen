@@ -1,0 +1,41 @@
+---
+- name: update server
+  hosts: application
+  become: true
+  tasks:
+    - name: update apt Cache
+      apt:
+        update_cache: yes
+    - name: upgrade all php_packages
+      apt:
+        upgrade: dist
+
+- name: install and configure mysql server
+  hosts: mysql
+  become: true
+  vars_files:
+    - vars/db.yml
+  roles:
+    - role: geerlingguy.mysql
+
+
+- name: install php on webserver isntance
+  hosts: magento
+  become: true
+  vars_files:
+    - vars/php.yml
+  roles:
+    - role: geerlingguy.php 
+
+- name: install elasticsearch
+  hosts: magento
+  become: true
+  roles:
+    - geerlingguy.java
+    - geerlingguy.elasticsearch
+
+- name: install nginx for magento
+  hosts: magento
+  become: true
+  roles:
+    - role: geerlingguy.nginx 

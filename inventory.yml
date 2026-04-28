@@ -1,0 +1,9 @@
+application:
+  children:
+    webserver:
+      hosts:
+        magento:
+    databaseserver:
+      hosts:
+        mysql:
+    
