@@ -1,0 +1,5 @@
+- name: Enable OpenSearch service
+  systemd:
+    name: opensearch
+    enabled: yes
+    state: started

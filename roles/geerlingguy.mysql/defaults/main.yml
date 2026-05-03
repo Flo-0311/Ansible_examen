@@ -32,9 +32,9 @@ mysql_enablerepo: ""
 
 # Define a custom list of packages to install; if none provided, the default
 # package list from vars/[OS-family].yml will be used.
-# mysql_packages:
-#   - mysql
-#   - mysql-server
+mysql_packages:
+  - mysql-server=8.0.*
+  - mysql-client=8.0.*
 #   - MySQL-python
 
 mysql_python_package_debian: python3-mysqldb
@@ -143,8 +143,14 @@ mysql_expire_logs_days: "10"
 mysql_replication_role: ''
 mysql_replication_master: ''
 mysql_replication_master_inventory_host: "{{ mysql_replication_master }}"
+magento_db_host: localhost
+magento_db_user: root
+magento_db_password: root_password
+magento_db_name: magento
 
 # Same keys as `mysql_users` above.
 mysql_replication_user: []
 
 mysql_hide_passwords: false
+
+mysql_trust_function_creators: true

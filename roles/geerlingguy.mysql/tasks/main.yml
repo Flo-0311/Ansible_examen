@@ -1,4 +1,14 @@
 ---
+
+- name: FULL RESET - drop Magento database (only if forced)
+  become: true
+  ansible.builtin.shell: |
+    mysql -h {{ magento_db_host }} -u{{ magento_db_user }} -p{{ magento_db_password }} -e "
+    DROP DATABASE IF EXISTS {{ magento_db_name }};
+    CREATE DATABASE {{ magento_db_name }};
+    "
+  when: magento_force_clean | default(false)
+
 # Variable configuration.
 - ansible.builtin.include_tasks: variables.yml
 

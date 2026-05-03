@@ -1,0 +1,6 @@
+---
+# handlers file for opensearch
+- name: restart opensearch
+  systemd:
+    name: opensearch
+    state: restarted

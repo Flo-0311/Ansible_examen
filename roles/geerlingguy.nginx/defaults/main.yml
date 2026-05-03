@@ -1,4 +1,5 @@
 ---
+php_enable_webserver: true
 # Used only for Debian/Ubuntu installation, as the -t option for apt.
 nginx_default_release: ""
 
@@ -59,7 +60,7 @@ nginx_extra_http_options: ""
 #      proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
 #      proxy_set_header   Host $http_host;
 
-nginx_remove_default_vhost: false
+nginx_remove_default_vhost: true
 
 # Listen on IPv6 (default: true)
 nginx_listen_ipv6: true
@@ -67,7 +68,7 @@ nginx_listen_ipv6: true
 nginx_vhosts: []
 # Example vhost below, showing all available options:
 # - listen: "80" # default: "80"
-#   server_name: "example.com" # default: N/A
+#   server_name: "www.magento-dev.com" # default: N/A
 #   root: "/var/www/example.com" # default: N/A
 #   index: "index.html index.htm" # default: "index.html index.htm"
 #   filename: "example.com.conf" # Can be used to set the vhost filename.

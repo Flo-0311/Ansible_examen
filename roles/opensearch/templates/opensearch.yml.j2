@@ -1,0 +1,9 @@
+cluster.name: {{ opensearch_cluster_name }}
+node.name: {{ opensearch_node_name }}
+
+network.host: {{ opensearch_network_host }}
+http.port: {{ opensearch_http_port }}
+
+discovery.type: single-node
+
+plugins.security.disabled: true

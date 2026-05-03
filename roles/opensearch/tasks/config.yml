@@ -1,0 +1,11 @@
+- name: Configure opensearch.yml
+  template:
+    src: opensearch.yml.j2
+    dest: /etc/opensearch/opensearch.yml
+  notify: restart opensearch
+
+- name: Configure JVM options
+  template:
+    src: jvm.options.j2
+    dest: /etc/opensearch/jvm.options.d/heap.options
+  notify: restart opensearch

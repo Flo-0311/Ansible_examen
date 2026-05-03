@@ -140,3 +140,8 @@ pid-file = {{ mysql_pid_file }}
 #
 !includedir {{ mysql_config_include_dir }}
 {% endif %}
+
+
+{% if mysql_trust_function_creators | default(false) %}
+log_bin_trust_function_creators = 1
+{% endif %}
