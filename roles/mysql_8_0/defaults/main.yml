@@ -1,0 +1,24 @@
+---
+#Set True if magento database already exists
+force_clear: false
+
+mysql_config_file: /etc/mysql/my.cnf
+mysql_packages:
+  - mysql-server
+mysql_python_package_debian:
+  - python3-pymysql
+
+mysql_db_name: magento
+mysql_user_priv: "magento.*:ALL"
+mysql_db_encoding: latin1
+mysql_db_collation: latin1_general_ci
+
+mysql_db_host: localhost
+mysql_db_user: user
+mysql_db_password: password
+mysql_root_password: root_password
+mysql_user_priv: "magento.*:ALL"
+
+
+
+

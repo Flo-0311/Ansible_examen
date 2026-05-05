@@ -1,0 +1,14 @@
+---
+# tasks file for opensearch
+- import_tasks: install.yml
+- import_tasks: config.yml
+- import_tasks: service.yml
+
+
+- name: make sure openserach is running
+  shell: curl 127.0.0.1:9200
+  register: result
+
+- name: show result
+  debug:
+    var: result.stdout

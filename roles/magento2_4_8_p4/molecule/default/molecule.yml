@@ -1,0 +1,20 @@
+dependency: 
+  name: galaxy
+driver:  
+  name: docker
+platforms:
+  - name: testinstance
+    image: testinstance:latest
+    pre_build_image: true
+    command: sleep infinity
+    privileged: true
+    tty: true
+    docker_networks: []
+    container_name: testinstance
+provisioner:
+  name: ansible
+  config_options:
+    defaults:
+      roles_path: /home/datascientest/Magento-Ubuntu-24.04-Deployment/roles
+verifier: 
+  name: testinfra 

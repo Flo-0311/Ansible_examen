@@ -1,0 +1,40 @@
+---
+- name: Check if Apache is installed
+  command: dpkg -l apache2
+  register: apache_check
+  failed_when: false
+  changed_when: false
+
+- name: Deinstall Apache if exists
+  apt:
+    name: apache2
+    state: absent
+    purge: true
+    autoremove: true
+  when: apache_check.rc == 0
+
+- name: Ensure nginx is installed.
+  apt:
+    name: "{{ nginx_package_name }}"
+    state: present
+
+
+# PHP version readout
+- name: Find PHP-FPM socket
+  shell: echo "/run/php/php8.3-fpm.sock" | grep -oP 'php\K[0-9]+\.[0-9]+'
+  register: php_version
+
+- import_tasks: vhosts.yml
+
+- name: Check if directory exists
+  stat:
+    path: /var/www/magento
+  register: file_check
+
+- name: Ensure nginx service is running as configured.
+  service:
+    name: nginx
+    state: "{{ nginx_service_state }}"
+    enabled: "{{ nginx_service_enabled }}"
+  when: file_check.stat.exists | default(false) # if file does NOT exist -> false -> task is skipped
+                                                # if file exists -> true -> task is executed

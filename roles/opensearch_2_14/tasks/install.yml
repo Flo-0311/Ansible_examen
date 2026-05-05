@@ -1,0 +1,25 @@
+- name: Install required packages
+  apt:
+    name:
+      - wget
+      - apt-transport-https
+      - gnupg
+    state: present
+    update_cache: yes
+
+- name: Add OpenSearch GPG key
+  apt_key:
+    url: https://artifacts.opensearch.org/publickeys/opensearch.pgp
+    state: present
+
+- name: Add OpenSearch repository
+  apt_repository:
+    repo: "deb https://artifacts.opensearch.org/releases/bundle/opensearch/2.x/apt stable main"
+    state: present
+
+- name: Install OpenSearch
+  apt:
+    name: "opensearch={{ opensearch_version }}"
+    state: present
+  environment:
+    OPENSEARCH_INITIAL_ADMIN_PASSWORD: "StrongPassword123!"

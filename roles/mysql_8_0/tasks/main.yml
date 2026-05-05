@@ -1,0 +1,67 @@
+---
+# tasks file for mysql
+
+- name: check if mysql already installed
+  ansible.builtin.stat:
+    path: "{{ mysql_config_file }}"
+  register: mysql_installed
+
+- name: update apt cache
+  ansible.builtin.apt:
+    update_cache: true
+  changed_when: false
+  when: not mysql_installed.stat.exists
+
+
+- name: install mysql python libarys
+  ansible.builtin.apt:
+    name: "{{ mysql_python_package_debian }}"
+    state: present
+
+
+- name: install mysql packages
+  ansible.builtin.apt:
+    name: "{{ mysql_packages }}"
+    state: present
+    policy_rc_d: 101
+  register: deb_mysql_install_packages
+
+- name: ensure mysql is started and enabled
+  ansible.builtin.service:
+    name: mysql
+    state: started
+    enabled: true
+
+- name: Set root password and auth method
+  become: true
+  shell: |
+    mysql -u root -p'{{ mysql_root_password }}' -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '{{ mysql_root_password }}'; FLUSH PRIVILEGES;"
+
+
+- name: FULL RESET - Database for Magento
+  ansible.builtin.shell: |
+    mysql -h {{ mysql_db_host }} -u{{ mysql_db_user }} -p{{ mysql_db_password }} -e "
+    DROP DATABASE IF EXISTS {{ mysql_db_name }};
+    "
+  when: force_clear | default(false)
+
+- name: create magento database
+  become: true
+  mysql_db:
+    name: "{{ mysql_db_name }}"
+    encoding: "{{ mysql_db_encoding }}"
+    collation: "{{ mysql_db_collation }}"
+    state: present
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+
+- name: create mysql user
+  become: true
+  mysql_user:
+    name: "{{ mysql_db_user }}"
+    host: "{{ mysql_db_host | default('localhost') }}"
+    password: "{{ mysql_db_password }}"
+    priv: "{{ mysql_user_priv }}"
+    state: present
+    login_user: root
+    login_password: "{{ mysql_root_password }}"

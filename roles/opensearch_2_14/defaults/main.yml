@@ -1,0 +1,11 @@
+---
+# defaults file for opensearch
+opensearch_version: "2.14.0"
+
+opensearch_heap_size: "1g"
+
+opensearch_cluster_name: "my-opensearch-cluster"
+opensearch_node_name: "{{ inventory_hostname }}"
+
+opensearch_network_host: "0.0.0.0"
+opensearch_http_port: 9200

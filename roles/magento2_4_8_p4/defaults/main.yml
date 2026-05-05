@@ -1,0 +1,37 @@
+---
+
+# Basispfade
+docroot: /var/www
+magento_dir: magento
+composer_path: /usr/bin/composer
+
+# Magento Edition
+magento_edition: community   # community | enterprise
+
+# Datenbank
+magento_db_host: localhost
+magento_db_name: magento
+magento_db_user: root
+magento_db_password: root_password
+
+# Admin User
+magento_admin_firstname: admin
+magento_admin_lastname: user
+magento_admin_email: admin@example.com
+magento_admin_user: admin
+magento_admin_password: admin1234!!!
+
+# Shop Config
+magento_base_url: http://ec2-35-180-83-192.eu-west-3.compute.amazonaws.com/
+magento_language: en_US
+magento_currency: USD
+magento_timezone: Europe/Berlin
+
+# Optional Flags
+magento_use_rewrites: 1
+magento_backend_frontname: admin
+
+magento_public_key: "5d323b161d10a58c1ceb547e8e388ff2"
+magento_private_key: "aa7b081c0f4a7fa2bb864e22e8e27fc8"
+
+magento_force_clean: true

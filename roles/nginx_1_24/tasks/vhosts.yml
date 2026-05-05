@@ -1,0 +1,27 @@
+---
+- name: Ensure nginx_vhost_path exists.
+  file:
+    path: "{{ nginx_vhost_path }}"
+    state: directory
+    mode: 0755
+  notify: restart nginx
+
+- name: remove default vhost conf
+  file:
+    path: "{{ nginx_default_vhost_path }}"
+    state: absent
+  notify: restart nginx
+
+
+- name: configure vhost conf
+  template:
+    src: vhost.j2
+    dest: /etc/nginx/sites-enabled/magento
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart nginx
+
+
+
+  

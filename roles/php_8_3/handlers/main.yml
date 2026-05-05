@@ -1,0 +1,4 @@
+---
+# handlers file for php
+- name: restart php-fpm
+  shell: systemctl start php{{ php_version.stdout }}-fpm

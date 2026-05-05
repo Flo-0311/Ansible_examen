@@ -1,0 +1,114 @@
+---
+
+- name: Remove Magento project directory
+  ansible.builtin.file:
+    path: "{{ docroot }}/{{ magento_dir }}"
+    state: absent
+  when: magento_force_clean | default(false)
+
+- name: Ensure docroot exists
+  ansible.builtin.file:
+    path: "{{ docroot }}"
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: '0755'
+
+
+- name: Install Composer globally
+  ansible.builtin.shell: |
+    curl -sS https://getcomposer.org/installer | php
+    mv composer.phar /usr/local/bin/composer
+  args:
+    creates: /usr/local/bin/composer
+
+
+- name: Create Magento project
+  become: true
+  vars:
+    composer_auth_dict:
+      http-basic:
+        repo.magento.com:
+          username: "{{ magento_public_key }}"
+          password: "{{ magento_private_key }}"
+  environment:
+    COMPOSER_ALLOW_SUPERUSER: "1"
+    COMPOSER_AUTH: "{{ composer_auth_dict | to_json }}"
+  command: >
+    composer create-project
+    --repository=https://repo.magento.com/
+    magento/project-community-edition
+    {{ docroot }}/{{ magento_dir }}
+    --no-interaction
+  args:
+    creates: "{{ docroot }}/{{ magento_dir }}/composer.json"
+
+
+- name: Set Magento ownership
+  ansible.builtin.command: >
+    chown -R www-data:www-data {{ docroot }}/{{ magento_dir }}
+
+
+- name: Set Magento writable directories (directories)
+  ansible.builtin.command: >
+    find var generated pub/static pub/media app/etc -type d -exec chmod 2775 {} +
+  args:
+    chdir: "{{ docroot }}/{{ magento_dir }}"
+
+
+- name: Set Magento writable directories (files)
+  ansible.builtin.command: >
+    find var generated pub/static pub/media app/etc -type f -exec chmod 664 {} +
+  args:
+    chdir: "{{ docroot }}/{{ magento_dir }}"
+
+
+- name: Make bin/magento executable
+  ansible.builtin.file:
+    path: "{{ docroot }}/{{ magento_dir }}/bin/magento"
+    mode: '0755'
+
+
+- name: Run Magento setup install (SAFE CONTEXT)
+  ansible.builtin.command: >
+    sudo -u www-data php bin/magento setup:install
+    --base-url={{ magento_base_url }}
+    --db-host={{ magento_db_host }}
+    --db-name={{ magento_db_name }}
+    --db-user={{ magento_db_user }}
+    --db-password={{ magento_db_password }}
+    --backend-frontname={{ magento_backend_frontname }}
+    --admin-firstname={{ magento_admin_firstname }}
+    --admin-lastname={{ magento_admin_lastname }}
+    --admin-email={{ magento_admin_email }}
+    --admin-user={{ magento_admin_user }}
+    --admin-password={{ magento_admin_password }}
+    --language={{ magento_language }}
+    --currency={{ magento_currency }}
+    --timezone={{ magento_timezone }}
+    --use-rewrites={{ magento_use_rewrites }}
+    --search-engine=opensearch
+    --opensearch-host=127.0.0.1
+    --opensearch-port=9200
+  args:
+    chdir: "{{ docroot }}/{{ magento_dir }}"
+    creates: "{{ docroot }}/{{ magento_dir }}/app/etc/env.php"
+
+
+- name: Set Magento to developer mode
+  ansible.builtin.command: >
+    sudo -u www-data php bin/magento deploy:mode:set developer
+  args:
+    chdir: "{{ docroot }}/{{ magento_dir }}"
+
+
+- name: Setup Magento cron
+  ansible.builtin.cron:
+    name: "Magento Cron"
+    user: www-data
+    job: "php {{ docroot }}/{{ magento_dir }}/bin/magento cron:run | grep -v 'Ran jobs by schedule' >> {{ docroot }}/{{ magento_dir }}/var/log/magento.cron.log"
+    minute: "*"
+
+- name: Include nginx to starting nginx server
+  include_role:
+    name: nginx_1.24
