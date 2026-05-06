@@ -1,1 +1,1 @@
-ansible_host: 172.31.41.128 #privat ip because the ansible master and webserver to find in same vpc
+ansible_host: 172.31.42.51 #privat ip because the ansible master and webserver to find in same vpc

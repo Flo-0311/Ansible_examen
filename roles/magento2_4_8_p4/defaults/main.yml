@@ -22,7 +22,7 @@ magento_admin_user: admin
 magento_admin_password: admin1234!!!
 
 # Shop Config
-magento_base_url: http://ec2-15-188-63-109.eu-west-3.compute.amazonaws.com/
+magento_base_url: http://ec2-35-180-138-78.eu-west-3.compute.amazonaws.com/
 magento_language: en_US
 magento_currency: USD
 magento_timezone: Europe/Berlin
