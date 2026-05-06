@@ -1,0 +1,8 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.0.3, pluggy-1.6.0
+rootdir: /home/datascientest/Ansible_examen/roles/magento2_4_8_p4/molecule/tests
+collected 1 item
+
+test_default.py .                                                        [100%]
+
+============================== 1 passed in 0.06s ===============================

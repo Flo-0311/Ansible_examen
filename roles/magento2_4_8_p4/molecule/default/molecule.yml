@@ -4,13 +4,13 @@ driver:
   name: docker
 platforms:
   - name: testinstance
-    image: testinstance:latest
+    image: geerlingguy/docker-ubuntu2204-ansible:latest
     pre_build_image: true
     command: sleep infinity
     privileged: true
     tty: true
     docker_networks: []
-    container_name: testinstance
+    container_name: geerling
 provisioner:
   name: ansible
   config_options:

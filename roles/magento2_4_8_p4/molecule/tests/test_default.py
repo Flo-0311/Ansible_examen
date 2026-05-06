@@ -1,6 +1,6 @@
 import mysql.connector
 
-def test_connection_database(host):
+def test_connection_database():
     try:
         conn = mysql.connector.connect(
         host="localhost",
