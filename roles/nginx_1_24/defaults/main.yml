@@ -3,7 +3,7 @@ nginx_package_name: "nginx"
 nginx_default_vhost_path: 
 nginx_vhost_template: "vhost.j2"
 nginx_vhost_path: /etc/nginx/sites-enabled
-domain_name: "ec2-35-180-83-192.eu-west-3.compute.amazonaws.com"
+domain_name: "ec2-15-188-63-109.eu-west-3.compute.amazonaws.com"
 nginx_service_state: started
 nginx_service_enabled: true
 nginx_default_vhost_path: /etc/nginx/sites-enabled/default

@@ -111,4 +111,4 @@
 
 - name: Include nginx to starting nginx server
   include_role:
-    name: nginx_1.24
+    name: nginx_1_24

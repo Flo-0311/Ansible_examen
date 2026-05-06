@@ -15,6 +15,6 @@ provisioner:
   name: ansible
   config_options:
     defaults:
-      roles_path: /home/datascientest/Magento-Ubuntu-24.04-Deployment/roles
+      roles_path: /home/datascientest/Ansible_examen/roles
 verifier: 
   name: testinfra 

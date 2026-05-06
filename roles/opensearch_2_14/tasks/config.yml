@@ -4,8 +4,9 @@
     dest: /etc/opensearch/opensearch.yml
   notify: restart opensearch
 
-- name: Configure JVM options
+- name: Configure JVM heap options
   template:
     src: jvm.options.j2
     dest: /etc/opensearch/jvm.options.d/heap.options
+    mode: '0644'
   notify: restart opensearch

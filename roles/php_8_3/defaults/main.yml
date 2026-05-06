@@ -7,19 +7,19 @@ php_upload_max_filesize: "256M"
 php_post_max_size: "256M"
 php_max_input_vars: "5000"
 php_packages:
-  - php
-  - php-cli
-  - php-common
-  - php-fpm
-  - php-opcache
-  - php-dev
-  - php-gd
-  - php-mbstring
-  - php-xml
-  - php-zip
-  - php-intl
-  - php-curl
-  - php-soap
-  - php-bcmath
-  - php-mysql
-  - php-apcu
+  - php8.3
+  - php8.3-cli
+  - php8.3-common
+  - php8.3-fpm
+  - php8.3-opcache
+  - php8.3-dev
+  - php8.3-gd
+  - php8.3-mbstring
+  - php8.3-xml
+  - php8.3-zip
+  - php8.3-intl
+  - php8.3-curl
+  - php8.3-soap
+  - php8.3-bcmath
+  - php8.3-mysql
+  - php8.3-apcu

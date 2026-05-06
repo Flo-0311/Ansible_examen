@@ -1,34 +1,12 @@
----
-
 - name: install and configure mysql server
   hosts: magento
   become: true
-  vars_files:
-    - vars/db.yml
   roles:
-    - role: geerlingguy.mysql
-
-- name: install php on webserver isntance
-  hosts: magento
-  become: true
-  vars_files:
-    - vars/php.yml
-  roles:
-    - role: geerlingguy.php 
-
-- name: install java and opensearch
-  hosts: magento
-  become: true
-  roles:
-    - geerlingguy.java
-    - opensearch
-
-- name: install magento and konfigure vhost konfig
-  hosts: magento
-  become: true
-  roles:
-    - geerlingguy.nginx
-    - magento
-
+    - role: mysql_8_0
+    - role: php_8_3
+    - role: nginx_1_24
+    - role: java_17
+    - role: opensearch_2_14
+    - role: magento2_4_8_p4
 
 

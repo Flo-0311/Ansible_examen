@@ -1,10 +1,6 @@
-application:
+application: #values are to find in group/host vars directory
   children:
     webserver:
       hosts:
         magento:
-    databaseserver:
-      hosts:
-        mysql:
-
     
